@@ -1,5 +1,7 @@
 # Burp Suite Log Parser
 
+[![Python application](https://github.com/jonaslejon/burp_log_parser/actions/workflows/python-app.yml/badge.svg)](https://github.com/jonaslejon/burp_log_parser/actions/workflows/python-app.yml)
+
 A Python script that parses Burp Suite log files (XML or CSV format), decodes base64-encoded HTTP requests and responses, and displays them in a human-readable format with colored terminal output.
 
 ## Features
