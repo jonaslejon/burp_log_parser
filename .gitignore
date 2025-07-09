@@ -1,2 +1,5 @@
 *.burp
 *.log
+__pycache__
+__pycache__/
+__pycache__/*
