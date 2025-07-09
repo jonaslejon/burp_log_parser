@@ -66,9 +66,16 @@ python burp_log_parser.py burp_log.xml --filter_response "error,exception"
 python burp_log_parser.py burp_log.csv --negative_filter_response "200 OK,success"
 ```
 
-5. **Use regex to find email addresses in responses:**
+5. **Use regex to find specific patterns in responses:**
 ```bash
-python burp_log_parser.py burp_log.xml --filter_response "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+# Find SQL errors
+python burp_log_parser.py burp_log.xml --filter_response "SQL syntax.*MySQL|Warning.*mysql_"
+
+# Find exposed API keys
+python burp_log_parser.py burp_log.xml --filter_response "api[_-]?key|apikey|api_secret"
+
+# Find error messages
+python burp_log_parser.py burp_log.xml --filter_response "error|exception|stack trace"
 ```
 
 6. **Export results as JSON:**
@@ -136,7 +143,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Troubleshooting
+## Important Notes
+
+### Response Filtering
+- The `--filter_response` and `--negative_filter_response` options search within the **decoded response body**, not in headers or request data
+- Regex patterns are applied to the entire response content
+- When using complex regex patterns, consider escaping special characters or using quotes
+- The email regex example `[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}` may match patterns in encoded data (like JWT tokens or base64 strings) that aren't actual email addresses
+
+### Performance Considerations
+- Regex filtering on large responses can be CPU-intensive
+- For better performance with large files, combine status code filtering with content filtering
+- Consider using simpler string matching when regex isn't necessary
 
 ### Common Issues
 
